@@ -1,12 +1,14 @@
+use html2text::from_read;
 use std::env;
+use wikipedia_cli::fetch_data;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let search = &args[1];
 
-    println!("{search}");
+    fetch_data(search);
 }
 
-fn fetch_data(search: &String) -> String {
-    todo!();
+fn read_html(html: &[u8]) -> String {
+    from_read(&html[..], 20)
 }
