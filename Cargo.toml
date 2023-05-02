@@ -8,4 +8,6 @@ edition = "2021"
 [dependencies]
 html2text = "0.5.1"
 reqwest = {version = "0.11.17", features = ["blocking"]}
+tui = { package = "ratatui" }
+crossterm = "0.26"
 scraper = "0.16.0"
