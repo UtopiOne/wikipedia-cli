@@ -37,6 +37,11 @@ pub fn display_article(
             .collect::<Vec<String>>()
             .join("\n"),
     );
+<<<<<<< HEAD
+=======
+
+    println!("{}", paragraphs);
+>>>>>>> 58a2058b2bebe4e37cf3fddc936add00a6e088d1
 
     let title = request
         .select(&title_selector)
@@ -49,5 +54,9 @@ pub fn display_article(
         contents: paragraphs,
     };
 
+<<<<<<< HEAD
     ui::ArticleDisplay::new(article).unwrap();
+=======
+    // ui::ArticleDisplay::new(article).unwrap();
+>>>>>>> 58a2058b2bebe4e37cf3fddc936add00a6e088d1
 }
