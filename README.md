@@ -11,3 +11,7 @@ If your query contains whitespaces, type:
 ```
 $ ./wikipedia-cli '[your query]'
 ```
+You can also use cargo:
+```
+$ cargo run -- [Your query]
+```
