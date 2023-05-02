@@ -1,6 +1,6 @@
 use html2text::from_read;
 use reqwest::blocking::get;
-use ui::render_terminal;
+use ui::ArticleDisplay;
 
 pub mod ui;
 
@@ -20,18 +20,31 @@ pub fn fetch_data(query: Query) -> scraper::Html {
     .text()
     .unwrap();
 
-    let document = scraper::Html::parse_document(&request);
-
-    document
+    scraper::Html::parse_document(&request)
 }
 
 /// Displays formatted html that fits an CSS selector.
-pub fn display_article(selector: scraper::Selector, request: scraper::Html) {
+pub fn display_article(
+    contents_selector: scraper::Selector,
+    title_selector: scraper::Selector,
+    request: scraper::Html,
+) {
     let paragraphs = request
-        .select(&selector)
-        .map(|x| from_read(x.inner_html().as_bytes(), 150));
+        .select(&contents_selector)
+        .map(|x| from_read(x.inner_html().as_bytes(), 190))
+        .collect::<Vec<String>>()
+        .join("\n");
 
-    for text in paragraphs {
-        render_terminal(text);
-    }
+    let title = request
+        .select(&title_selector)
+        .map(|x| from_read(x.inner_html().as_bytes(), 50))
+        .collect::<Vec<String>>()
+        .join("");
+
+    let article = ArticleDisplay {
+        title: title,
+        contents: paragraphs,
+    };
+
+    ArticleDisplay::new(article).unwrap();
 }

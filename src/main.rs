@@ -17,13 +17,14 @@ fn main() {
 
     let search = &args[1];
 
-    let introduction_paragraph_selector =
-        scraper::Selector::parse("div.mw-parser-output>p").unwrap();
+    let paragraph_selector = scraper::Selector::parse("div.mw-parser-output>p").unwrap();
+
+    let title_selector = scraper::Selector::parse(".mw-page-title-main").unwrap();
 
     let document = fetch_data(Query {
         search: search.to_string(),
         language: "en".to_string(),
     });
 
-    display_article(introduction_paragraph_selector, document);
+    display_article(paragraph_selector, title_selector, document);
 }
