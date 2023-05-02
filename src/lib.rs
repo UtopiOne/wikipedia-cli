@@ -2,6 +2,7 @@ use html2text::from_read;
 use reqwest::blocking::get;
 use ui::ArticleDisplay;
 
+pub mod filters;
 pub mod ui;
 
 /// Whatever you are searching for.
@@ -29,11 +30,13 @@ pub fn display_article(
     title_selector: scraper::Selector,
     request: scraper::Html,
 ) {
-    let paragraphs = request
-        .select(&contents_selector)
-        .map(|x| from_read(x.inner_html().as_bytes(), 190))
-        .collect::<Vec<String>>()
-        .join("\n");
+    let paragraphs = filters::remove_square_brackets(
+        request
+            .select(&contents_selector)
+            .map(|x| from_read(x.inner_html().as_bytes(), 190))
+            .collect::<Vec<String>>()
+            .join("\n"),
+    );
 
     let title = request
         .select(&title_selector)
@@ -46,5 +49,5 @@ pub fn display_article(
         contents: paragraphs,
     };
 
-    ArticleDisplay::new(article).unwrap();
+    ui::ArticleDisplay::new(article).unwrap();
 }
