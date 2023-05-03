@@ -12,7 +12,7 @@ fn main() {
     let language = env::var("Q_LANG");
     match language {
         Ok(v) => println!("language: {}", v),
-        Err(e) => println!("Error: {e}"),
+        Err(e) => println!("Error: {e}. Please set the language by typing Q_LANG=en or similar in front of your command."),
     }
 
     let search = &args[1];
