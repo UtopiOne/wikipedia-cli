@@ -24,19 +24,21 @@ pub fn fetch_data(query: Query) -> scraper::Html {
     scraper::Html::parse_document(&request)
 }
 
-/// Displays formatted html that fits an CSS selector.
+/// Displays formatted html that fits a CSS selector.
 pub fn display_article(
     contents_selector: scraper::Selector,
     title_selector: scraper::Selector,
     request: scraper::Html,
 ) {
-    let paragraphs = filters::remove_square_brackets(
-        request
-            .select(&contents_selector)
-            .map(|x| from_read(x.inner_html().as_bytes(), 190))
-            .collect::<Vec<String>>()
-            .join("\n"),
-    );
+    let mut paragraphs = request
+        .select(&contents_selector)
+        .map(|x| from_read(x.inner_html().as_bytes(), 190))
+        .collect::<Vec<String>>()
+        .join("\n");
+
+    paragraphs = filters::remove_references(paragraphs);
+    paragraphs = filters::remove_square_brackets(paragraphs);
+    paragraphs = filters::remove_links(paragraphs);
 
     let title = request
         .select(&title_selector)
