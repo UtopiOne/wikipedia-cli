@@ -30,15 +30,15 @@ pub fn display_article(
     title_selector: scraper::Selector,
     request: scraper::Html,
 ) {
-    let mut paragraphs = filters::remove_references(
-        request
-            .select(&contents_selector)
-            .map(|x| from_read(x.inner_html().as_bytes(), 190))
-            .collect::<Vec<String>>()
-            .join("\n"),
-    );
+    let mut paragraphs = request
+        .select(&contents_selector)
+        .map(|x| from_read(x.inner_html().as_bytes(), 190))
+        .collect::<Vec<String>>()
+        .join("\n");
 
+    paragraphs = filters::remove_references(paragraphs);
     paragraphs = filters::remove_square_brackets(paragraphs);
+    paragraphs = filters::remove_links(paragraphs);
 
     let title = request
         .select(&title_selector)
