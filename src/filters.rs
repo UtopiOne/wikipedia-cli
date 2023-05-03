@@ -49,7 +49,7 @@ mod tests {
     }
 
     #[test]
-    fn remoce_links_test() {
+    fn remove_links_test() {
         let test_string = ": /wiki/Oxide(III)_Peroxide".to_string();
 
         assert_eq!("".to_string(), remove_links(test_string));

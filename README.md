@@ -1,9 +1,9 @@
 # Wikipedia CLI
-Basic CLI for Wikipedia.
+Read wikipedia articles inside your terminal.
 
 ## How to use
 
-To run, open the directory of the target build and type:
+To run, open the directory of the target build in the shell and type:
 
 ```
 $ ./wikipedia-cli [your query]
